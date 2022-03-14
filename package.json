@@ -1,0 +1,10 @@
+{
+  "name": "TP6-Web",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.17.3",
+    "moustache": "^0.0.4",
+    "mustache": "^4.2.0",
+    "mustache-express": "^1.3.2"
+  }
+}
