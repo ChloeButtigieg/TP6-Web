@@ -11,16 +11,21 @@ exports.load = function(filename) {
 };
 
 exports.save = function(filename) {
-    // make sure to only save the right fields
-    let replacer = function(key,value) {
-        if (['id', 'title', 'year', 'actors', 'plot', 'poster', ''].includes(key) ||
-            (0 <= key && key <= next_id)) {
-            return value;
+    let json_string = '{';
+    for (let id=0; id<next_id; id++) {
+        if (id in movies) {
+            // make sure to select only relevant fields
+            json_string = json_string + "\"" + String(id) + "\":" +
+                JSON.stringify(movies[id],
+                    ['id', 'title', 'year',
+                        'actors', 'plot', 'poster']) +
+                ',';
         } else {
-            return undefined;
+            console.log(`no movies with id ${id} in the base`);
         }
-    };
-    fs.writeFileSync(filename, JSON.stringify(movies, replacer));
+    }
+    json_string = json_string.substring(0, json_string.length-1) + '}';
+    fs.writeFileSync(filename, json_string);
 };
 
 exports.list = function() {
